@@ -4,6 +4,7 @@ const shoesList = [
     title: 'Shark Shoes',
     description: 'This yellow shoes will make your friend jealous.',
     isNew: true,
+    categories: ['sport', 'casual'],
   },
   {
     image: '/images/shoes-2.png',
@@ -11,26 +12,28 @@ const shoesList = [
     description:
       'You can wear this shoes with any clothes. It will make you look cool.',
     isNew: true,
+    categories: ['casual', 'summer'],
   },
   {
     image: '/images/shoes-3.png',
     title: 'Basic Fit',
     description:
       'You know what? This shoes is the best shoes for you who like to walk.',
+    categories: ['walking', 'sport'],
   },
   {
     image: '/images/shoes-4.png',
     title: 'Darku Shoes',
     description:
       'Wow, this shoes is so cool. You can wear it for any occasion.',
+    categories: ['formal', 'casual'],
   },
 ];
 
 const App = () => {
   return (
     <ShoesList>
-      {shoesList.map((shoe) => {
-        const { image, title, description, isNew } = shoe;
+      {shoesList.map(({ image, title, description, isNew, categories }) => {
         return (
           <ShoeCard
             key={title}
@@ -38,6 +41,7 @@ const App = () => {
             image={image}
             title={title}
             description={description}
+            categories={categories}
           />
         );
       })}
@@ -55,7 +59,7 @@ const ShoesList = (props) => {
 };
 
 const ShoeCard = (props) => {
-  const { image, title, description, isNew = false } = props;
+  const { image, title, description, isNew = false, categories } = props;
   return (
     <div {...props} className="card w-full bg-base-300 shadow-xl">
       <figure>
@@ -71,6 +75,11 @@ const ShoeCard = (props) => {
           {isNew ? <NewBadge /> : null}
         </h2>
         <p>{description}</p>
+        <div className="card-actions justify-end">
+          {categories.map((category) => (
+            <Badge key={`${title}-${category}`} category={category} />
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -82,6 +91,11 @@ const NewBadge = (props) => {
       NEW
     </div>
   );
+};
+
+const Badge = (props) => {
+  const { category } = props;
+  return <div className="badge badge-outline capitalize">{category}</div>;
 };
 
 export default App;
