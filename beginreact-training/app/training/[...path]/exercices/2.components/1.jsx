@@ -50,7 +50,7 @@ const ShoeCard = (props) => {
       <div className="card-body">
         <h2 className="card-title">
           {title}
-          <NewBadge isNew={isNew} />
+          {isNew ? <NewBadge /> : null}
         </h2>
         <p>{description}</p>
       </div>
@@ -59,8 +59,6 @@ const ShoeCard = (props) => {
 };
 
 const NewBadge = (props) => {
-  const { isNew } = props;
-  if (!isNew) return null;
   return (
     <div {...props} className="badge badge-secondary">
       NEW
