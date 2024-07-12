@@ -1,6 +1,6 @@
 export default function App() {
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+    <ShoesList>
       <ShoeCard
         image="/images/shoes-1.png"
         title="Shark Shoes"
@@ -21,11 +21,21 @@ export default function App() {
         title="Darku Shoes"
         description="Wow, this shoes is so cool. You can wear it for any occasion."
       />
-    </div>
+    </ShoesList>
   );
 }
 
-const ShoeCard = ({ image, title, description }) => {
+const ShoesList = (props) => {
+  const { children } = props;
+  return (
+    <div {...props} className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      {children}
+    </div>
+  );
+};
+
+const ShoeCard = (props) => {
+  const { image, title, description } = props;
   return (
     <div className="card w-full bg-base-300 shadow-xl">
       <figure>
