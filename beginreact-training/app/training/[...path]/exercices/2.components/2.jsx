@@ -1,49 +1,63 @@
-export default function App() {
+const shoesList = [
+  {
+    image: '/images/shoes-1.png',
+    title: 'Shark Shoes',
+    description: 'This yellow shoes will make your friend jealous.',
+    isNew: true,
+  },
+  {
+    image: '/images/shoes-2.png',
+    title: 'Blue Wheti',
+    description:
+      'You can wear this shoes with any clothes. It will make you look cool.',
+    isNew: true,
+  },
+  {
+    image: '/images/shoes-3.png',
+    title: 'Basic Fit',
+    description:
+      'You know what? This shoes is the best shoes for you who like to walk.',
+  },
+  {
+    image: '/images/shoes-4.png',
+    title: 'Darku Shoes',
+    description:
+      'Wow, this shoes is so cool. You can wear it for any occasion.',
+  },
+];
+
+const App = () => {
   return (
     <ShoesList>
-      {/* 🦁 Créer un tableau avec les informations ci-dessous */}
-      {/* 💡 Utilise l'IA et demande lui : "Créer un tableau pour afficher ces composants via une liste. Ne me donne que le tableau JavaScript." */}
-      {/* 🦁 Le nom du tableau = shoesList */}
-      {/* 💸 {shoesList.map(shoe => (...))} */}
-      <ShoeCard
-        isNew
-        image="/images/shoes-1.png"
-        title="Shark Shoes"
-        description="This yellow shoes will make your friend jealous."
-      />
-      <ShoeCard
-        isNew
-        image="/images/shoes-2.png"
-        title="Blue Wheti"
-        description="You can wear this shoes with any clothes. It will make you look cool."
-      />
-      <ShoeCard
-        image="/images/shoes-3.png"
-        title="Basic Fit"
-        description="You know what? This shoes is the best shoes for you who like to walk."
-      />
-      <ShoeCard
-        image="/images/shoes-4.png"
-        title="Darku Shoes"
-        description="Wow, this shoes is so cool. You can wear it for any occasion."
-      />
+      {shoesList.map((shoe) => {
+        const { image, title, description, isNew } = shoe;
+        return (
+          <ShoeCard
+            key={title}
+            isNew={isNew}
+            image={image}
+            title={title}
+            description={description}
+          />
+        );
+      })}
     </ShoesList>
   );
-}
+};
 
-function ShoesList({ children }) {
+const ShoesList = (props) => {
+  const { children } = props;
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">{children}</div>
+    <div {...props} className="grid grid-cols-1 gap-4 md:grid-cols-2">
+      {children}
+    </div>
   );
-}
+};
 
-function NewBadge() {
-  return <div className="badge badge-secondary">NEW</div>;
-}
-
-function ShoeCard({ image, title, description, isNew = false }) {
+const ShoeCard = (props) => {
+  const { image, title, description, isNew = false } = props;
   return (
-    <div className="card w-full bg-base-300 shadow-xl">
+    <div {...props} className="card w-full bg-base-300 shadow-xl">
       <figure>
         <img
           src={image}
@@ -60,4 +74,14 @@ function ShoeCard({ image, title, description, isNew = false }) {
       </div>
     </div>
   );
-}
+};
+
+const NewBadge = (props) => {
+  return (
+    <div {...props} className="badge badge-secondary">
+      NEW
+    </div>
+  );
+};
+
+export default App;

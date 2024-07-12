@@ -1,4 +1,4 @@
-export default function App() {
+const App = () => {
   return (
     <ShoesList>
       <ShoeCard
@@ -25,7 +25,7 @@ export default function App() {
       />
     </ShoesList>
   );
-}
+};
 
 const ShoesList = (props) => {
   const { children } = props;
@@ -65,3 +65,5 @@ const NewBadge = (props) => {
     </div>
   );
 };
+
+export default App;
