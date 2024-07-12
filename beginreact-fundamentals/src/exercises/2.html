@@ -22,7 +22,7 @@
   <script>
     // 🦁 Crée un button avec le text "Hello 👋"
     // 🦁 Ajoute une événement "onClick" à notre button qui affiche une alert.
-    const buttonElement = React.createElement(
+    const buttonHello = React.createElement(
       'button',
       {
         className: 'btn btn-primary',
@@ -31,10 +31,48 @@
       'Hello 👋'
     );
 
+    const Card = () =>
+      React.createElement(
+        'div',
+        { className: 'card bg-base-300 w-96 shadow-xl' },
+        React.createElement(
+          'figure',
+          null,
+          React.createElement('img', {
+            src: 'https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg',
+            alt: 'Shoes',
+          })
+        ),
+        React.createElement(
+          'div',
+          { className: 'card-body' },
+          React.createElement('h2', { className: 'card-title' }, 'Shoes!'),
+          React.createElement(
+            'p',
+            null,
+            'If a dog chews shoes whose shoes does he choose?'
+          ),
+          React.createElement(
+            'div',
+            { className: 'card-actions justify-end' },
+            React.createElement(
+              'button',
+              { className: 'btn btn-primary' },
+              'Buy Now'
+            )
+          )
+        )
+      );
+
     // 🦁 Crée une div : "main" avec à l'intérieur le bouton.
-    const mainElement = React.createElement('main', null, buttonElement);
     // 💡 On utilise un div `main` car la méthode `render` accepte qu'un seul élément
     // 💡 On va donc utiliser cette div pour render tous nos éléments
+    const mainElement = React.createElement(
+      'main',
+      null,
+      buttonHello,
+      React.createElement(Card)
+    );
 
     const container = document.querySelector('#root');
     const root = ReactDOM.createRoot(container); // 🦁 Remplace `undefined` by `ReactDOM.createRoot(container);`
