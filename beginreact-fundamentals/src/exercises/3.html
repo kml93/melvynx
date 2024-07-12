@@ -24,20 +24,29 @@
   <script type="text/babel">
     // 🦁 Remplace tout ceci par du JSX !
     // 💡 <button id=...
-    const startButton = React.createElement(
-      'button',
-      {
-        id: 'start',
-        onClick: () => {
-          alert('Le bouton start à été cliqué !');
-        },
-      },
-      'Start'
-    );
+    const Main = (props) => {
+      const { children } = props;
+      return <main {...props}>{children}</main>;
+    };
+
+    const Button = (props) => {
+      const { children } = props;
+      return <button {...props}>{children}</button>;
+    };
 
     // 🦁 Remplace tout ceci par du JSX !
     // 💡 <div>...
-    const elements = React.createElement('div', null, startButton);
+    const elements = (
+      <Main>
+        <Button
+          id="start"
+          className="btn btn-primary"
+          onClick={() => alert('Le bouton start à été cliqué !')}
+        >
+          Start
+        </Button>
+      </Main>
+    );
 
     const root = ReactDOM.createRoot(document.querySelector('#root'));
     root.render(elements);
