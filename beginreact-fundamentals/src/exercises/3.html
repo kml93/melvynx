@@ -22,49 +22,64 @@
 
   <!-- 💡 permet de faire comprendre a Babel qu'il doit compiler ce fichier -->
   <script type="text/babel">
-    // 🦁 Remplace tout ceci par du JSX !
-    // 💡 <button id=...
     const Main = (props) => {
       const { children } = props;
-      return <main {...props}>{children}</main>;
+      return React.createElement('main', props, children);
     };
-
     const Card = ({ image, children }) => {
-      return (
-        <div className="shadow-xl card bg-base-100 w-96">
-          <figure>
-            <img src={image} alt="Shoes" />
-          </figure>
-          <div className="card-body">{children}</div>
-        </div>
+      return React.createElement(
+        'div',
+        {
+          className: 'shadow-xl card bg-base-100 w-96',
+        },
+        React.createElement(
+          'figure',
+          null,
+          React.createElement('img', {
+            src: image,
+            alt: 'Shoes',
+          })
+        ),
+        React.createElement(
+          'div',
+          {
+            className: 'card-body',
+          },
+          children
+        )
       );
     };
-
     const Button = (props) => {
       const { children } = props;
-      return <button {...props}>{children}</button>;
+      return React.createElement('button', props, children);
     };
 
     // 🦁 Remplace tout ceci par du JSX !
     // 💡 <div>...
-    const elements = (
-      <Main>
-        <Button
-          id="start"
-          className="btn btn-primary"
-          onClick={() => alert('Le bouton start à été cliqué !')}
-        >
-          Start
-        </Button>
-        <Card image="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg">
-          <p>Je suis un custom body</p>
-        </Card>
-        <h2>{Math.random()}</h2>
-        <p>{112 + 4}</p>
-        <span>{new Date().toDateString()}</span>
-      </Main>
+    const elements = React.createElement(
+      Main,
+      null,
+      React.createElement(
+        Button,
+        {
+          id: 'start',
+          className: 'btn btn-primary',
+          onClick: () => alert('Le bouton start à été cliqué !'),
+        },
+        'Start'
+      ),
+      React.createElement(
+        Card,
+        {
+          image:
+            'https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg',
+        },
+        React.createElement('p', null, 'Je suis un custom body')
+      ),
+      React.createElement('h2', null, Math.random()),
+      React.createElement('p', null, 112 + 4),
+      React.createElement('span', null, new Date().toDateString())
     );
-
     const root = ReactDOM.createRoot(document.querySelector('#root'));
     root.render(elements);
   </script>
