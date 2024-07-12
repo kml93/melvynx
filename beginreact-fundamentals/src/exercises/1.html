@@ -42,11 +42,22 @@
 
     const counterContainer = document.createElement('div');
     counterContainer.className = 'container__button';
+
+    const fruits = ['banana', 'apple', 'strawberry'];
+    const ulFruits = document.createElement('ul');
+
+    for (const fruit of fruits) {
+      const liFruit = document.createElement('li');
+      liFruit.innerText = fruit;
+      ulFruits.appendChild(liFruit);
+    }
+
     // 🦁 ajoute le button dans l'élément "root"
     rootElement.appendChild(buttonElement);
     rootElement.appendChild(counterContainer);
     counterContainer.appendChild(Counter(5));
     counterContainer.appendChild(Counter('zdvsdv'));
     counterContainer.appendChild(Counter());
+    rootElement.appendChild(ulFruits);
   </script>
 </html>
