@@ -27,7 +27,26 @@
       alert('Tu as cliqué sur Hello !')
     );
 
+    const Counter = (initialValue) => {
+      const button = document.createElement('button');
+      button.classList.add('btn', 'btn-primary');
+      button.innerText = Number(initialValue) || 0;
+
+      button.addEventListener('click', () => {
+        const previousValue = Number(button.innerText);
+        button.innerText = previousValue + 1;
+      });
+
+      return button;
+    };
+
+    const counterContainer = document.createElement('div');
+    counterContainer.className = 'container__button';
     // 🦁 ajoute le button dans l'élément "root"
     rootElement.appendChild(buttonElement);
+    rootElement.appendChild(counterContainer);
+    counterContainer.appendChild(Counter(5));
+    counterContainer.appendChild(Counter('zdvsdv'));
+    counterContainer.appendChild(Counter());
   </script>
 </html>
