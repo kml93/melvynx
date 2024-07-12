@@ -2,11 +2,13 @@ export default function App() {
   return (
     <ShoesList>
       <ShoeCard
+        isNew
         image="/images/shoes-1.png"
         title="Shark Shoes"
         description="This yellow shoes will make your friend jealous."
       />
       <ShoeCard
+        isNew
         image="/images/shoes-2.png"
         title="Blue Wheti"
         description="You can wear this shoes with any clothes. It will make you look cool."
@@ -35,9 +37,9 @@ const ShoesList = (props) => {
 };
 
 const ShoeCard = (props) => {
-  const { image, title, description } = props;
+  const { image, title, description, isNew = false } = props;
   return (
-    <div className="card w-full bg-base-300 shadow-xl">
+    <div {...props} className="card w-full bg-base-300 shadow-xl">
       <figure>
         <img
           src={image}
@@ -48,10 +50,20 @@ const ShoeCard = (props) => {
       <div className="card-body">
         <h2 className="card-title">
           {title}
-          {/* <div className="badge badge-secondary">NEW</div> */}
+          <NewBadge isNew={isNew} />
         </h2>
         <p>{description}</p>
       </div>
+    </div>
+  );
+};
+
+const NewBadge = (props) => {
+  const { isNew } = props;
+  if (!isNew) return null;
+  return (
+    <div {...props} className="badge badge-secondary">
+      NEW
     </div>
   );
 };

@@ -33,14 +33,6 @@ function ShoesList({ children }) {
   );
 }
 
-function NewBadge({ isNew }) {
-  if (!isNew) {
-    return null;
-  }
-
-  return <div className="badge badge-secondary">NEW</div>;
-}
-
 function ShoeCard({ image, title, description, isNew = false }) {
   return (
     <div className="card w-full bg-base-300 shadow-xl">
@@ -59,4 +51,12 @@ function ShoeCard({ image, title, description, isNew = false }) {
       </div>
     </div>
   );
+}
+
+function NewBadge({ isNew }) {
+  if (!isNew) {
+    return null;
+  }
+
+  return <div className="badge badge-secondary">NEW</div>;
 }
