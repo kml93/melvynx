@@ -33,18 +33,9 @@ const shoesList = [
 const App = () => {
   return (
     <ShoesList>
-      {shoesList.map(({ image, title, description, isNew, categories }) => {
-        return (
-          <ShoeCard
-            key={title}
-            isNew={isNew}
-            image={image}
-            title={title}
-            description={description}
-            categories={categories}
-          />
-        );
-      })}
+      {shoesList.map((shoe, index) => (
+        <ShoeCard key={index + shoe.title} {...shoe} />
+      ))}
     </ShoesList>
   );
 };
@@ -75,10 +66,16 @@ const ShoeCard = (props) => {
           {isNew ? <NewBadge /> : null}
         </h2>
         <p>{description}</p>
-        <div className="card-actions justify-end">
-          {categories.map((category) => (
-            <Badge key={`${title}-${category}`} category={category} />
-          ))}
+        <div className="flex items-center justify-between">
+          <div className="flex gap-2">
+            {categories.map((category) => (
+              <Badge key={`${title}-${category}`}>{category}</Badge>
+            ))}
+          </div>
+          <label className="label flex cursor-pointer flex-col gap-1">
+            <span className="label-text">Cart</span>
+            <input type="checkbox" className="checkbox" />
+          </label>
         </div>
       </div>
     </div>
@@ -94,8 +91,8 @@ const NewBadge = (props) => {
 };
 
 const Badge = (props) => {
-  const { category } = props;
-  return <div className="badge badge-outline capitalize">{category}</div>;
+  const { children } = props;
+  return <div className="badge badge-outline capitalize">{children}</div>;
 };
 
 export default App;
