@@ -64,6 +64,16 @@
         )
       );
 
+    const fruits = ['pomme', 'poire', 'fraise', 'cerise'];
+
+    const ulFruits = React.createElement(
+      'ul',
+      {
+        className: 'list-disc list-inside',
+      },
+      fruits.map((fruit) => React.createElement('li', null, fruit))
+    );
+
     // 🦁 Crée une div : "main" avec à l'intérieur le bouton.
     // 💡 On utilise un div `main` car la méthode `render` accepte qu'un seul élément
     // 💡 On va donc utiliser cette div pour render tous nos éléments
@@ -71,7 +81,8 @@
       'main',
       null,
       buttonHello,
-      React.createElement(Card)
+      React.createElement(Card),
+      ulFruits
     );
 
     const container = document.querySelector('#root');
