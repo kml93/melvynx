@@ -22,13 +22,23 @@
   <script>
     // 🦁 Crée un button avec le text "Hello 👋"
     // 🦁 Ajoute une événement "onClick" à notre button qui affiche une alert.
+    const buttonElement = React.createElement(
+      'button',
+      {
+        className: 'btn btn-primary',
+        onClick: () => alert('Tu as cliqué sur Hello !'),
+      },
+      'Hello 👋'
+    );
 
     // 🦁 Crée une div : "main" avec à l'intérieur le bouton.
+    const mainElement = React.createElement('main', null, buttonElement);
     // 💡 On utilise un div `main` car la méthode `render` accepte qu'un seul élément
     // 💡 On va donc utiliser cette div pour render tous nos éléments
 
     const container = document.querySelector('#root');
-    const root = undefined; // 🦁 Remplace `undefined` by `ReactDOM.createRoot(container);`
+    const root = ReactDOM.createRoot(container); // 🦁 Remplace `undefined` by `ReactDOM.createRoot(container);`
     // 🦁 Utilise `root.render` pour afficher la div "main"
+    root.render(mainElement);
   </script>
 </html>
