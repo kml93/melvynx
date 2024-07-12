@@ -23,6 +23,10 @@
     // 🦁 ajoute le text "Hello 👋" dedans
     buttonElement.innerText = 'Hello 👋';
 
+    buttonElement.addEventListener('click', () =>
+      alert('Tu as cliqué sur Hello !')
+    );
+
     // 🦁 ajoute le button dans l'élément "root"
     rootElement.appendChild(buttonElement);
   </script>
