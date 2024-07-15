@@ -12,6 +12,20 @@
 // - purple
 //   - background: "#8b5cf615"
 //   - color: "#6d28d9"
+const COLORS = {
+  red: {
+    backgroundColor: '#ef444415',
+    color: '#b91c1c',
+  },
+  green: {
+    backgroundColor: '#22c55e15',
+    color: '#15803d',
+  },
+  purple: {
+    backgroundColor: '#8b5cf615',
+    color: '#6d28d9',
+  },
+};
 
 // 🦁 2. Sizes
 // Pour chaque size, tu vas utiliser les "inline styles" pour définir la taille du padding et la taille de la police.
@@ -20,6 +34,14 @@
 //   - padding: "2px 6px"
 // - lg
 //   - padding: "4px 8px"
+const SIZES = {
+  default: {
+    padding: '2px 6px',
+  },
+  lg: {
+    padding: '4px 8px',
+  },
+};
 
 // 🦁 Tu vas ensuite pouvoir utiliser ces objets pour définir les styles de ton badge.
 // Avec les props, tu vas pouvoir récupérer la taille et le variant du badge pour lui appliquer les styles correspondants.
@@ -37,15 +59,22 @@
 // - width: "fit-content"
 
 // 💣 Supprime cette ligne
-// eslint-disable-next-line no-unused-vars
 const Badge = ({ size, variant, children }) => {
+  const sizeStyle = SIZES[size] || SIZES.default;
+  const colorStyle = COLORS[variant] || COLORS.red;
+
   return (
     <span
-      style={
-        {
-          // 🦁 Ajoute les styles
-        }
-      }
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        borderRadius: '6px',
+        fontSize: '14px',
+        fontWeight: '500',
+        width: 'fit-content',
+        ...colorStyle,
+        ...sizeStyle,
+      }}
     >
       {children}
     </span>
