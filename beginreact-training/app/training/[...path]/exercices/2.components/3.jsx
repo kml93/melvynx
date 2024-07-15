@@ -1,14 +1,15 @@
 import clsx from 'clsx';
+import styles from './3.module.css';
 
 const COLORS = {
-  red: 'badge-color-red',
-  green: 'badge-color-green',
-  purple: 'badge-color-purple',
+  red: styles['badge-color-red'],
+  green: styles['badge-color-green'],
+  purple: styles['badge-color-purple'],
 };
 
 const SIZES = {
-  default: 'badge-size-default',
-  lg: 'badge-size-large',
+  default: styles['badge-size-default'],
+  lg: styles['badge-size-large'],
 };
 
 const Badge = ({ size, variant, children }) => {
@@ -16,7 +17,7 @@ const Badge = ({ size, variant, children }) => {
   const colorStyle = COLORS[variant] || COLORS.red;
 
   return (
-    <span className={clsx('badge-base', sizeStyle, colorStyle)}>
+    <span className={clsx(styles['badge-base'], sizeStyle, colorStyle)}>
       {children}
     </span>
   );
