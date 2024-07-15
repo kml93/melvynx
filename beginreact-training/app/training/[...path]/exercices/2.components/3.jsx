@@ -1,81 +1,22 @@
-// 🦁 Tu vas devoir créer un badge qui possède plusieurs "variant" (couleur) et taille (size).
+import clsx from 'clsx';
 
-// 🦁 1. Variants
-// Pour chaque variant, tu vas utiliser les "inline styles" pour définir la couleur de fond et la couleur du texte.
-// Pour ça, tu vas créer un objet `VARIANTS` qui contiendra les clés suivantes :
-// - red
-//   - background: "#ef444415"
-//   - color: "#b91c1c"
-// - green
-//   - background: "#22c55e15"
-//   - color: "#15803d"
-// - purple
-//   - background: "#8b5cf615"
-//   - color: "#6d28d9"
 const COLORS = {
-  red: {
-    backgroundColor: '#ef444415',
-    color: '#b91c1c',
-  },
-  green: {
-    backgroundColor: '#22c55e15',
-    color: '#15803d',
-  },
-  purple: {
-    backgroundColor: '#8b5cf615',
-    color: '#6d28d9',
-  },
+  red: 'badge-color-red',
+  green: 'badge-color-green',
+  purple: 'badge-color-purple',
 };
 
-// 🦁 2. Sizes
-// Pour chaque size, tu vas utiliser les "inline styles" pour définir la taille du padding et la taille de la police.
-// Pour ça, tu vas créer un objet `SIZES` qui contiendra les clés suivantes :
-// - default
-//   - padding: "2px 6px"
-// - lg
-//   - padding: "4px 8px"
 const SIZES = {
-  default: {
-    padding: '2px 6px',
-  },
-  lg: {
-    padding: '4px 8px',
-  },
+  default: 'badge-size-default',
+  lg: 'badge-size-large',
 };
 
-// 🦁 Tu vas ensuite pouvoir utiliser ces objets pour définir les styles de ton badge.
-// Avec les props, tu vas pouvoir récupérer la taille et le variant du badge pour lui appliquer les styles correspondants.
-// Pour ça, tu peux utiliser la syntaxe suivante :
-// 💡 SIZES[size] || SIZES.default;
-// 💡 COLORS[variant] || COLORS.red;
-// Et les appliquer directement sur le style de ton span.
-// 💡 Tu peux ensuite utiliser le spread (...) pour ajouter les styles.
-
-// 🦁 Finalement, voici les styles "commun" entre chaque badge :
-// - display: "inline-flex"
-// - alignItems: "center"
-// - borderRadius: "6px"
-// - fontWeight: "500"
-// - width: "fit-content"
-
-// 💣 Supprime cette ligne
 const Badge = ({ size, variant, children }) => {
   const sizeStyle = SIZES[size] || SIZES.default;
   const colorStyle = COLORS[variant] || COLORS.red;
 
   return (
-    <span
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        borderRadius: '6px',
-        fontSize: '14px',
-        fontWeight: '500',
-        width: 'fit-content',
-        ...colorStyle,
-        ...sizeStyle,
-      }}
-    >
+    <span className={clsx('badge-base', sizeStyle, colorStyle)}>
       {children}
     </span>
   );

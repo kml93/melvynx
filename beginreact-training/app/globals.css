@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.badge-base {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  width: fit-content;
+}
+.badge-size-default {
+  padding: 2px 6px;
+}
+.badge-size-large {
+  padding: 4px 8px;
+}
+.badge-color-red {
+  background-color: #ef444415;
+  color: #b91c1c;
+}
+.badge-color-green {
+  background-color: #22c55e15;
+  color: #15803d;
+}
+.badge-color-purple {
+  background-color: #8b5cf615;
+  color: #6d28d9;
+}

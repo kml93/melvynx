@@ -1,25 +1,24 @@
-import clsx from "clsx";
+import clsx from 'clsx';
 
 /**
 ```css
 // globals.css
 
-.badge {
+.badge-base {
   display: inline-flex;
   align-items: center;
   border-radius: 0.375rem; 
   font-weight: 500;
   width: fit-content;
+  font-size: 14px;
 }
 
 .badge-size-default {
   padding: 2px 6px;
-  font-size: 14px;
 }
 
 .badge-size-large {
   padding: 4px 8px;
-  font-size: 14px;
 }
 
 .badge-color-red {
@@ -41,14 +40,14 @@ import clsx from "clsx";
  */
 
 const SIZES = {
-  default: "badge-size-default",
-  lg: "badge-size-large",
+  default: 'badge-size-default',
+  lg: 'badge-size-large',
 };
 
 const COLORS = {
-  red: "badge-color-red",
-  green: "badge-color-green",
-  purple: "badge-color-purple",
+  red: 'badge-color-red',
+  green: 'badge-color-green',
+  purple: 'badge-color-purple',
 };
 
 const Badge = ({ size, variant, children }) => {
@@ -56,7 +55,7 @@ const Badge = ({ size, variant, children }) => {
   const colorClassName = COLORS[variant] || COLORS.red;
 
   return (
-    <span className={clsx("badge", sizeClassName, colorClassName)}>
+    <span className={clsx('badge-base', sizeClassName, colorClassName)}>
       {children}
     </span>
   );
