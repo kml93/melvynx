@@ -1,23 +1,21 @@
 import clsx from 'clsx';
-import styles from './3.module.css';
 
-const COLORS = {
-  red: styles['badge-color-red'],
-  green: styles['badge-color-green'],
-  purple: styles['badge-color-purple'],
-};
-
-const SIZES = {
-  default: styles['badge-size-default'],
-  lg: styles['badge-size-large'],
-};
-
-const Badge = ({ size, variant, children }) => {
-  const sizeStyle = SIZES[size] || SIZES.default;
-  const colorStyle = COLORS[variant] || COLORS.red;
-
+const Badge = ({ size = 'default', variant = 'red', children }) => {
   return (
-    <span className={clsx(styles['badge-base'], sizeStyle, colorStyle)}>
+    <span
+      className={clsx(
+        'inline-flex w-fit items-center rounded-md text-sm font-medium',
+        {
+          'px-2 py-1': size === 'lg',
+          'px-1.5 py-0.5': size === 'default',
+        },
+        {
+          'bg-red-500/10 text-red-700': variant === 'red',
+          'bg-green-500/10 text-green-700': variant === 'green',
+          'bg-purple-500/10 text-purple-700': variant === 'purple',
+        }
+      )}
+    >
       {children}
     </span>
   );
@@ -25,7 +23,7 @@ const Badge = ({ size, variant, children }) => {
 
 export default function App() {
   return (
-    <div className="grid grid-cols-4 flex-col gap-2 bg-white p-8 text-black">
+    <div className="grid grid-cols-4 items-center gap-2 bg-white p-8 text-black">
       <p className="code">Size / color</p>
       <p className="code">Green</p>
       <p className="code">Red</p>
