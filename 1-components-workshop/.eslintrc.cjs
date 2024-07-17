@@ -31,7 +31,7 @@ module.exports = {
   settings: {
     tailwindcss: {
       // These are the default values but feel free to customize
-      callees: ["classnames", "clsx", "ctl"],
+      callees: ["cn", "clsx", "ctl", "cva"],
       config: "tailwind.config.ts", // returned from `loadConfig()` utility if not provided
       cssFiles: [
         "**/*.css",
