@@ -1,14 +1,20 @@
-// @ts-nocheck
-"use client";
+'use client';
 
-import clsx from "clsx";
+import clsx from 'clsx';
+
+const buttonList = [
+  { children: 'Eat me', id: 'eat-me', variant: 'primary' },
+  { children: 'Love me', id: 'love-me', variant: 'error' },
+  { children: 'Drink me', id: 'drink-me', variant: 'success' },
+  { children: 'Leave me', id: 'leave-me', variant: 'warning' },
+];
 
 const Button = ({ children, variant, id }) => {
-  const buttonClass = clsx("btn ring-offset-2 ring-offset-base-100", {
-    "btn-primary": variant === "primary",
-    "btn-error": variant === "error",
-    "btn-success": variant === "success",
-    "btn-warning": variant === "warning",
+  const buttonClass = clsx('btn ring-offset-2 ring-offset-base-100', {
+    'btn-primary': variant === 'primary',
+    'btn-error': variant === 'error',
+    'btn-success': variant === 'success',
+    'btn-warning': variant === 'warning',
   });
 
   return (
@@ -19,28 +25,19 @@ const Button = ({ children, variant, id }) => {
 };
 
 export default function App() {
+  const handleClick = (event) => {
+    event.target === event.currentTarget
+      ? console.log(`You clicked on container.`)
+      : console.log(`You clicked on ${event.target.id}.`);
+  };
+
   return (
-    <div
-      // 🦁 Rajoute un `onClick` avec un arrow function
-      // 💡 (e) => {...}
-      // Récupère l'id de l'élément cliqué avec `target`
-      // Si `target` === `currentTarget` = container
-      // Sinon = id de l'élément cliqué
-      // Affiche une `alert` avec `alert`
-      className="flex flex-wrap gap-4 p-4"
-    >
-      <Button variant={"primary"} id="eat-me">
-        Eat me
-      </Button>
-      <Button variant={"error"} id="love-me">
-        Love me
-      </Button>
-      <Button variant={"success"} id="drink-me">
-        Drink me
-      </Button>
-      <Button variant={"warning"} id="leave-me">
-        Eat me
-      </Button>
+    <div onClick={(e) => handleClick(e)} className="flex flex-wrap gap-4 p-4">
+      {buttonList.map(({ id, variant, children }) => (
+        <Button key={id} variant={variant} id={id}>
+          {children}
+        </Button>
+      ))}
     </div>
   );
 }
