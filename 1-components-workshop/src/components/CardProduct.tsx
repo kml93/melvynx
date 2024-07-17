@@ -6,20 +6,21 @@ import { Button } from "./ui/button";
 import { Card, CardTitle } from "./ui/card";
 
 export type CardProductProps = {
-  title: string;
-  category: string;
-  urlDocs: string;
-  allCategory: string;
-  categoryChosen: string;
+  card: {
+    name: string;
+    category: string;
+    url: string;
+  };
+  hideCategory: boolean;
 };
 
-const CardProduct = (props: CardProductProps) => {
-  const { title, category, urlDocs, allCategory, categoryChosen } = props;
-
+const CardProduct = ({ card, hideCategory }: CardProductProps) => {
+  const { name: title, category, url: urlDocs } = card;
   const rightCardElement = [LuBookOpen, LuPlusCircle];
 
-  const buttonGroupMap = rightCardElement.map((Element) => {
+  const CardProductButton = rightCardElement.map((Element) => {
     const iconElement = <Element size={16} />;
+
     return (
       <Button size="icon" variant="secondary" key={Element.name}>
         {Element === LuBookOpen ? (
@@ -36,7 +37,7 @@ const CardProduct = (props: CardProductProps) => {
   return (
     <Card className="flex w-1/3 grow flex-col justify-between gap-4 rounded-lg p-4 transition-colors hover:border-gray-300 hover:bg-gray-100 max-[480px]:w-full md:w-1/4">
       <div className="flex items-center gap-2">
-        <ReactSvg />
+        <ReactSvg size={24} />
         <span className="text-base font-bold">React</span>
       </div>
 
@@ -45,18 +46,17 @@ const CardProduct = (props: CardProductProps) => {
       </CardTitle>
 
       <div
-        className={cn(
-          "flex items-center justify-between gap-4",
-          categoryChosen !== allCategory && "justify-end",
-        )}
+        className={cn("flex items-center justify-between gap-4", {
+          "justify-end": hideCategory,
+        })}
       >
-        {categoryChosen === allCategory ? (
+        {!hideCategory && (
           <p className="overflow-hidden text-ellipsis text-start text-xs text-gray-400">
             {category}
           </p>
-        ) : null}
+        )}
 
-        <ButtonGroup className="gap-2">{buttonGroupMap}</ButtonGroup>
+        <ButtonGroup className="gap-2">{CardProductButton}</ButtonGroup>
       </div>
     </Card>
   );
