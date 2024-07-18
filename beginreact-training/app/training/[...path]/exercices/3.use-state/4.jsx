@@ -9,7 +9,7 @@ const buttonList = [
   { children: 'Leave me', id: 'leave-me', variant: 'warning' },
 ];
 
-const Button = ({ children, variant, id }) => {
+const Button = ({ children, variant, id, ...props }) => {
   const buttonClass = clsx('btn ring-offset-2 ring-offset-base-100', {
     'btn-primary': variant === 'primary',
     'btn-error': variant === 'error',
@@ -17,22 +17,32 @@ const Button = ({ children, variant, id }) => {
     'btn-warning': variant === 'warning',
   });
 
+  const handleClickButton = (event) =>
+    console.log('You clicked on', event.target.id);
+
   return (
-    <button className={buttonClass} id={id}>
+    <button
+      className={buttonClass}
+      id={id}
+      onClick={(e) => handleClickButton(e)}
+      {...props}
+    >
       {children}
     </button>
   );
 };
 
 export default function App() {
-  const handleClick = (event) => {
-    event.target === event.currentTarget
-      ? console.log(`You clicked on container.`)
-      : console.log(`You clicked on ${event.target.id}.`);
+  const handleClickContainer = (event) => {
+    event.target === event.currentTarget &&
+      console.log(`You clicked on container.`);
   };
 
   return (
-    <div onClick={(e) => handleClick(e)} className="flex flex-wrap gap-4 p-4">
+    <div
+      onClick={(e) => handleClickContainer(e)}
+      className="flex flex-wrap gap-4 p-4"
+    >
       {buttonList.map(({ id, variant, children }) => (
         <Button key={id} variant={variant} id={id}>
           {children}
