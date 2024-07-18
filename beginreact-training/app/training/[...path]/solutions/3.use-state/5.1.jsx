@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { User2 } from "lucide-react";
-import { useState } from "react";
+import { User2 } from 'lucide-react';
+import { useState } from 'react';
 
 const NameForm = () => {
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
 
   return (
     <div className="flex flex-col items-center justify-center">
