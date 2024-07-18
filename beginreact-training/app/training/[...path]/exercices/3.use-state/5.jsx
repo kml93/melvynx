@@ -16,6 +16,11 @@ const NameForm = ({ initialName: initialNameInputState = '' }) => {
           ) : (
             <p className="text-error">No name</p>
           )}
+          {initialNameInputState !== inputName && (
+            <ButtonReset
+              handleClickReset={() => setInputName(initialNameInputState)}
+            />
+          )}
         </div>
       </div>
       <div className="divider">Form</div>
@@ -33,11 +38,20 @@ const NameForm = ({ initialName: initialNameInputState = '' }) => {
   );
 };
 
+const ButtonReset = ({ handleClickReset }) => {
+  return (
+    <button
+      onClick={() => handleClickReset?.()}
+      className="btn btn-warning btn-sm"
+    >
+      Reset
+    </button>
+  );
+};
+
 export default function App() {
   return (
     <div>
-      <NameForm />
-      <NameForm initialName="" />
       <NameForm initialName="Kamil" />
     </div>
   );
