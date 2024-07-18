@@ -3,8 +3,8 @@
 import { User2 } from 'lucide-react';
 import { useState } from 'react';
 
-const NameForm = () => {
-  const [inputName, setInputName] = useState('');
+const NameForm = ({ initialName: initialNameInputState = '' }) => {
+  const [inputName, setInputName] = useState(initialNameInputState);
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -37,6 +37,8 @@ export default function App() {
   return (
     <div>
       <NameForm />
+      <NameForm initialName="" />
+      <NameForm initialName="Kamil" />
     </div>
   );
 }
