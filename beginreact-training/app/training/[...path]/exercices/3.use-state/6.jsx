@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/src/utils/cn';
-import { Plus } from 'lucide-react';
+import { Plus, Trash } from 'lucide-react';
 import { useState } from 'react';
 
 const findDuplicate = (stringToFind, key, array) => {
@@ -41,6 +41,11 @@ export const Todos = () => {
     return setTodos(
       todos.map((todo) => (todo.id === idInput ? updatedTodo : todo))
     );
+  };
+
+  const removeTodo = (id) => {
+    const updatedTodo = todos.filter((element) => element.id !== id);
+    return setTodos(updatedTodo);
   };
 
   return (
@@ -92,6 +97,12 @@ export const Todos = () => {
                       {text}
                     </p>
                   </label>
+                  <button
+                    className="btn btn-ghost"
+                    onClick={() => removeTodo(id)}
+                  >
+                    <Trash size={16} />
+                  </button>
                 </li>
               );
             })
