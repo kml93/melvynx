@@ -10,8 +10,7 @@ const findDuplicate = (stringToFind, key, array) => {
   );
 };
 
-export const Todos = () => {
-  const initialTodo = '';
+const useTodos = () => {
   const initialTodos = [
     {
       id: 1,
@@ -20,7 +19,6 @@ export const Todos = () => {
     },
   ];
 
-  const [todo, setTodo] = useState(initialTodo);
   const [todos, setTodos] = useState(initialTodos);
 
   const addTodo = (valueInput) => {
@@ -30,7 +28,6 @@ export const Todos = () => {
         text: valueInput,
         completed: false,
       };
-      setTodo(initialTodo);
       return setTodos((curr) => [...curr, newDataTodo]);
     }
   };
@@ -48,6 +45,19 @@ export const Todos = () => {
     return setTodos(updatedTodo);
   };
 
+  return { todos, addTodo, updateTodo, removeTodo };
+};
+
+export const Todos = () => {
+  const initialTodo = '';
+  const [todo, setTodo] = useState(initialTodo);
+  const { todos, addTodo, updateTodo, removeTodo } = useTodos();
+
+  const handleAddTodo = () => {
+    addTodo(todo);
+    setTodo(initialTodo);
+  };
+
   return (
     <div className="card w-full max-w-md border border-base-300 bg-base-200 shadow-xl">
       <div className="card-body">
@@ -63,15 +73,15 @@ export const Todos = () => {
               }
             />
             <input
+              value={todo}
+              onChange={(event) => setTodo(event.target.value)}
+              onKeyDown={(event) => event.key === 'Enter' && handleAddTodo()}
               type="text"
               className="grow"
               placeholder="Some task"
-              value={todo}
-              onChange={(event) => setTodo(event.target.value)}
-              onKeyDown={(event) => event.key === 'Enter' && addTodo(todo)}
             />
           </label>
-          <button className="btn btn-primary" onClick={() => addTodo(todo)}>
+          <button onClick={() => handleAddTodo()} className="btn btn-primary">
             <Plus size={22} />
           </button>
         </div>
@@ -81,13 +91,13 @@ export const Todos = () => {
             todos.map((singleTodos) => {
               const { id, text, completed } = singleTodos;
               return (
-                <li key={id} className="flex w-full items-center gap-2">
+                <li className="flex w-full items-center gap-2" key={id}>
                   <label className="input input-bordered flex flex-1 items-center gap-2">
                     <input
+                      onChange={() => updateTodo(id)}
+                      checked={completed}
                       type="checkbox"
                       className="checkbox checkbox-sm"
-                      checked={completed}
-                      onChange={() => updateTodo(id)}
                     />
                     <p
                       className={cn({
@@ -98,8 +108,8 @@ export const Todos = () => {
                     </p>
                   </label>
                   <button
-                    className="btn btn-ghost"
                     onClick={() => removeTodo(id)}
+                    className="btn btn-ghost"
                   >
                     <Trash size={16} />
                   </button>
