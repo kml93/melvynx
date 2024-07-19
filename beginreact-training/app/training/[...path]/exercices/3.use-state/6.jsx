@@ -1,17 +1,38 @@
-"use client";
+'use client';
 
-import { Plus } from "lucide-react";
+import { Plus } from 'lucide-react';
+import { useState } from 'react';
+
+const findDuplicate = (stringToFind, key, array) => {
+  return !array.find(
+    (element) => element[key].toLowerCase() === stringToFind.toLowerCase()
+  );
+};
 
 export const Todos = () => {
-  // 🦁 Ajoute deux états :
-  //    - `todos` : un tableau vide
-  //    - `todo` : une chaîne de caractères vide
+  const initialTodo = '';
+  const initialTodos = [
+    {
+      id: 1,
+      text: 'Faire les courses',
+      completed: false,
+    },
+  ];
 
-  // 🦁 Crée une méthode `addTodo` qui ajoute un todo
-  // 💡 Un todo est un objet avec 3 propriétés :
-  //    1. `id` : un identifiant unique (💡 utilise `Date.now()`)
-  //    2. `text` : le texte du todo
-  //    3. `completed` : un booléen qui indique si le todo est complété (💡 `false` par défaut)
+  const [todo, setTodo] = useState(initialTodo);
+  const [todos, setTodos] = useState(initialTodos);
+
+  const addTodo = (inputValue) => {
+    if (inputValue.length > 0 && findDuplicate(inputValue, 'text', todos)) {
+      const dataTodo = {
+        id: Date.now(),
+        text: inputValue,
+        completed: false,
+      };
+      setTodo(initialTodo);
+      return setTodos((curr) => [...curr, dataTodo]);
+    }
+  };
 
   return (
     <div className="card w-full max-w-md border border-base-300 bg-base-200 shadow-xl">
@@ -23,25 +44,43 @@ export const Todos = () => {
               type="checkbox"
               checked={false}
               className="checkbox checkbox-sm"
+              onChange={(event) =>
+                event.target.checked === !event.target.checked
+              }
             />
-            {/* 🦁 Ajoute un état "Todo" et contrôle l'input */}
-            <input type="text" className="grow" placeholder="Some task" />
+            <input
+              type="text"
+              className="grow"
+              placeholder="Some task"
+              value={todo}
+              onChange={(event) => setTodo(event.target.value)}
+              onKeyDown={(event) => event.key === 'Enter' && addTodo(todo)}
+            />
           </label>
-          {/* 🦁 Lors du clic sur le bouton, appelle la méthode "addTodo" */}
-          <button className="btn btn-primary">
+          <button className="btn btn-primary" onClick={() => addTodo(todo)}>
             <Plus size={22} />
           </button>
         </div>
         <div className="divider">List</div>
         <ul className="space-y-2">
-          {/* Voici un exemple d'un élément "Todo" */}
-          {/* Tu dois afficher ces éléments avec une liste en utilisant `.map` */}
-          <li className="flex w-full items-center gap-2">
-            <label className="input input-bordered flex flex-1 items-center gap-2">
-              <input type="checkbox" className="checkbox checkbox-sm" />
-              <p>Todo demo</p>
-            </label>
-          </li>
+          {todos.map((singleTodos) => {
+            const { id, text, completed } = singleTodos;
+            return (
+              <li key={id} className="flex w-full items-center gap-2">
+                <label className="input input-bordered flex flex-1 items-center gap-2">
+                  <input
+                    type="checkbox"
+                    className="checkbox checkbox-sm"
+                    checked={completed}
+                    onChange={(event) =>
+                      event.target.checked === !event.target.checked
+                    }
+                  />
+                  <p>{text}</p>
+                </label>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>
