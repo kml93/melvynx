@@ -32,12 +32,9 @@ const useTodos = () => {
     }
   };
 
-  const updateTodo = (idInput) => {
-    const updatedTodo = todos.find((element) => element.id === idInput);
-    updatedTodo.completed = !updatedTodo.completed;
-    return setTodos(
-      todos.map((todo) => (todo.id === idInput ? updatedTodo : todo))
-    );
+  const updateTodo = (id, newTodo) => {
+    // const todoToUpdate = todos.find((element) => element.id === idInput);
+    return setTodos(todos.map((todo) => (todo.id === id ? newTodo : todo)));
   };
 
   const removeTodo = (id) => {
@@ -51,6 +48,7 @@ const useTodos = () => {
 export const Todos = () => {
   const initialTodo = '';
   const [todo, setTodo] = useState(initialTodo);
+  const [editingId, setEditingId] = useState(null);
   const { todos, addTodo, updateTodo, removeTodo } = useTodos();
 
   const handleAddTodo = () => {
@@ -92,21 +90,47 @@ export const Todos = () => {
               const { id, text, completed } = singleTodos;
               return (
                 <li className="flex w-full items-center gap-2" key={id}>
-                  <label className="input input-bordered flex flex-1 items-center gap-2">
+                  <div
+                    className={cn('input flex flex-1 items-center gap-2', {
+                      'input-bordered': editingId === id,
+                    })}
+                  >
                     <input
-                      onChange={() => updateTodo(id)}
+                      onChange={() => {
+                        updateTodo(id, {
+                          ...singleTodos,
+                          completed: !completed ?? completed,
+                        });
+                      }}
                       checked={completed}
                       type="checkbox"
                       className="checkbox checkbox-sm"
                     />
-                    <p
-                      className={cn({
-                        'line-through text-neutral-content': completed,
-                      })}
-                    >
-                      {text}
-                    </p>
-                  </label>
+                    {editingId === id ? (
+                      <input
+                        onBlur={(event) => {
+                          updateTodo(id, {
+                            ...singleTodos,
+                            text: event.target.value || text,
+                          });
+                          setEditingId(null);
+                        }}
+                        ref={(r) => r?.focus()}
+                        type="text"
+                        defaultValue={text}
+                        className="grow"
+                      />
+                    ) : (
+                      <p
+                        onClick={() => setEditingId(id)}
+                        className={cn({
+                          'line-through text-neutral-content': completed,
+                        })}
+                      >
+                        {text}
+                      </p>
+                    )}
+                  </div>
                   <button
                     onClick={() => removeTodo(id)}
                     className="btn btn-ghost"
