@@ -1,10 +1,11 @@
 'use client';
 
+import { cn } from '@/src/utils/cn';
 import { Plus } from 'lucide-react';
 import { useState } from 'react';
 
 const findDuplicate = (stringToFind, key, array) => {
-  return !array.find(
+  return !array.some(
     (element) => element[key].toLowerCase() === stringToFind.toLowerCase()
   );
 };
@@ -22,16 +23,24 @@ export const Todos = () => {
   const [todo, setTodo] = useState(initialTodo);
   const [todos, setTodos] = useState(initialTodos);
 
-  const addTodo = (inputValue) => {
-    if (inputValue.length > 0 && findDuplicate(inputValue, 'text', todos)) {
-      const dataTodo = {
+  const addTodo = (valueInput) => {
+    if (valueInput.length > 0 && findDuplicate(valueInput, 'text', todos)) {
+      const newDataTodo = {
         id: Date.now(),
-        text: inputValue,
+        text: valueInput,
         completed: false,
       };
       setTodo(initialTodo);
-      return setTodos((curr) => [...curr, dataTodo]);
+      return setTodos((curr) => [...curr, newDataTodo]);
     }
+  };
+
+  const updateTodo = (idInput) => {
+    const updatedTodo = todos.find((element) => element.id === idInput);
+    updatedTodo.completed = !updatedTodo.completed;
+    return setTodos(
+      todos.map((todo) => (todo.id === idInput ? updatedTodo : todo))
+    );
   };
 
   return (
@@ -63,24 +72,32 @@ export const Todos = () => {
         </div>
         <div className="divider">List</div>
         <ul className="space-y-2">
-          {todos.map((singleTodos) => {
-            const { id, text, completed } = singleTodos;
-            return (
-              <li key={id} className="flex w-full items-center gap-2">
-                <label className="input input-bordered flex flex-1 items-center gap-2">
-                  <input
-                    type="checkbox"
-                    className="checkbox checkbox-sm"
-                    checked={completed}
-                    onChange={(event) =>
-                      event.target.checked === !event.target.checked
-                    }
-                  />
-                  <p>{text}</p>
-                </label>
-              </li>
-            );
-          })}
+          {todos.length > 0 ? (
+            todos.map((singleTodos) => {
+              const { id, text, completed } = singleTodos;
+              return (
+                <li key={id} className="flex w-full items-center gap-2">
+                  <label className="input input-bordered flex flex-1 items-center gap-2">
+                    <input
+                      type="checkbox"
+                      className="checkbox checkbox-sm"
+                      checked={completed}
+                      onChange={() => updateTodo(id)}
+                    />
+                    <p
+                      className={cn({
+                        'line-through text-neutral-content': completed,
+                      })}
+                    >
+                      {text}
+                    </p>
+                  </label>
+                </li>
+              );
+            })
+          ) : (
+            <p className="text-neutral-content">Empty</p>
+          )}
         </ul>
       </div>
     </div>

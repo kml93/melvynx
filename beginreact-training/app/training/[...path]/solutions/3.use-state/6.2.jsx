@@ -1,18 +1,18 @@
-"use client";
+'use client';
 
-import { cn } from "@/src/utils/cn";
-import { Plus } from "lucide-react";
-import { useState } from "react";
+import { cn } from '@/src/utils/cn';
+import { Plus } from 'lucide-react';
+import { useState } from 'react';
 
 export const Todos = () => {
   const [todos, setTodos] = useState([
     {
       id: 1222919191,
-      text: "Faire les courses",
+      text: 'Faire les courses',
       completed: false,
     },
   ]);
-  const [todo, setTodo] = useState("");
+  const [todo, setTodo] = useState('');
 
   const addTodo = () => {
     const newTodo = {
@@ -22,7 +22,7 @@ export const Todos = () => {
     };
     const newTodos = [...todos, newTodo];
     setTodos(newTodos);
-    setTodo("");
+    setTodo('');
   };
 
   const updateTodo = (id, newTodo) => {
@@ -50,7 +50,7 @@ export const Todos = () => {
                 setTodo(e.target.value);
               }}
               onKeyDown={(e) => {
-                if (e.key === "Enter") {
+                if (e.key === 'Enter') {
                   addTodo();
                 }
               }}
@@ -82,7 +82,7 @@ export const Todos = () => {
                 />
                 <p
                   className={cn({
-                    "line-through text-neutral-content": todo.completed,
+                    'line-through text-neutral-content': todo.completed,
                   })}
                 >
                   {todo.text}
