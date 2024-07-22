@@ -5,20 +5,25 @@ import { useState } from 'react';
 
 // eslint-disable-next-line no-unused-vars
 export const LoginForm = ({ onSubmitData }) => {
+  const [email, setEmail] = useState('');
+  const [user, setUser] = useState('');
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const formData = new FormData();
-    onSubmitData({
-      email: formData.get('email'),
-      name: formData.get('user'),
-    });
+    onSubmitData({ name: user, email });
   };
   return (
     <form className="flex flex-col gap-2" onSubmit={(e) => handleSubmit(e)}>
       <label className="input input-bordered flex items-center gap-2 has-[:invalid]:input-error">
         <Mail size={16} />
-        <input type="email" className="grow" name="email" placeholder="email" />
+        <input
+          type="email"
+          className="grow"
+          placeholder="email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+        />
       </label>
       <label className="input input-bordered flex items-center gap-2 has-[:invalid]:input-error">
         <User2 size={16} />
@@ -26,8 +31,9 @@ export const LoginForm = ({ onSubmitData }) => {
           type="text"
           className="grow"
           minLength={3}
-          name="user"
           placeholder="user"
+          value={user}
+          onChange={(event) => setUser(event.target.value)}
         />
       </label>
       <button type="submit" className="btn btn-primary">
