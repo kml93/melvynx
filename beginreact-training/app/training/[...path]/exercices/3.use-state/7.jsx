@@ -1,17 +1,20 @@
 'use client';
 
 import { Mail, User2 } from 'lucide-react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 // eslint-disable-next-line no-unused-vars
 export const LoginForm = ({ onSubmitData }) => {
-  const [email, setEmail] = useState('');
-  const [user, setUser] = useState('');
+  const emailRef = useRef(null);
+  const userRef = useRef(null);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    onSubmitData({ name: user, email });
+    onSubmitData({
+      name: userRef.current?.value,
+      email: emailRef.current?.value,
+    });
   };
   return (
     <form className="flex flex-col gap-2" onSubmit={(e) => handleSubmit(e)}>
@@ -21,8 +24,7 @@ export const LoginForm = ({ onSubmitData }) => {
           type="email"
           className="grow"
           placeholder="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
+          ref={emailRef}
         />
       </label>
       <label className="input input-bordered flex items-center gap-2 has-[:invalid]:input-error">
@@ -32,8 +34,7 @@ export const LoginForm = ({ onSubmitData }) => {
           className="grow"
           minLength={3}
           placeholder="user"
-          value={user}
-          onChange={(event) => setUser(event.target.value)}
+          ref={userRef}
         />
       </label>
       <button type="submit" className="btn btn-primary">
