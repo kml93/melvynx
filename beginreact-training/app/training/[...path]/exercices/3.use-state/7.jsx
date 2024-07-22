@@ -1,32 +1,39 @@
 'use client';
 
 import { Mail, User2 } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 // eslint-disable-next-line no-unused-vars
 export const LoginForm = ({ onSubmitData }) => {
-  const emailRef = useRef(null);
-  const userRef = useRef(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    onSubmitData({
-      name: userRef.current?.value,
-      email: emailRef.current?.value,
-    });
-  };
+  console.log('errors:', errors);
   return (
-    <form className="flex flex-col gap-2" onSubmit={(e) => handleSubmit(e)}>
+    <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmitData)}>
       <label className="input input-bordered flex items-center gap-2 has-[:invalid]:input-error">
         <Mail size={16} />
         <input
-          type="email"
+          type="text"
           className="grow"
           placeholder="email"
-          ref={emailRef}
+          {...register('email', {
+            required: {
+              value: true,
+              message: 'Email is required',
+            },
+            pattern: {
+              value: /\S+@\S+\.\S+/,
+              message: 'Entered value does not match valid email',
+            },
+          })}
         />
       </label>
+      {errors.email && <p className="text-error">{errors.email.message}</p>}
       <label className="input input-bordered flex items-center gap-2 has-[:invalid]:input-error">
         <User2 size={16} />
         <input
@@ -34,7 +41,7 @@ export const LoginForm = ({ onSubmitData }) => {
           className="grow"
           minLength={3}
           placeholder="user"
-          ref={userRef}
+          {...register('name', { required: true })}
         />
       </label>
       <button type="submit" className="btn btn-primary">
