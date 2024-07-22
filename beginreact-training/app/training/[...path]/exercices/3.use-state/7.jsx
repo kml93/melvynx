@@ -1,29 +1,36 @@
-"use client";
+'use client';
 
-import { Mail, User2 } from "lucide-react";
-import { useState } from "react";
+import { Mail, User2 } from 'lucide-react';
+import { useState } from 'react';
 
 // eslint-disable-next-line no-unused-vars
-export const LoginForm = ({ onSubmit }) => {
-  // 🦁 Utilise 2 states pour le mail et le name
+export const LoginForm = ({ onSubmitData }) => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-  // 🦁 Crée une méthode "handleSubmit" qui sera passée au `onSubmit` de `form`
-  // - Commence par empêcher le comportement par défaut du formulaire
-  // - Puis appelle `onSubmit` avec un objet contenant le mail et le name
+    const formData = new FormData();
+    onSubmitData({
+      email: formData.get('email'),
+      name: formData.get('user'),
+    });
+  };
   return (
-    // Ajoute la props `onSubmit`
-    <form className="flex flex-col gap-2">
-      <label className="input input-bordered flex items-center gap-2">
+    <form className="flex flex-col gap-2" onSubmit={(e) => handleSubmit(e)}>
+      <label className="input input-bordered flex items-center gap-2 has-[:invalid]:input-error">
         <Mail size={16} />
-        {/* 🦁 Contrôle cette input */}
-        <input type="text" className="grow" placeholder="email" />
+        <input type="email" className="grow" name="email" placeholder="email" />
       </label>
-      <label className="input input-bordered flex items-center gap-2">
+      <label className="input input-bordered flex items-center gap-2 has-[:invalid]:input-error">
         <User2 size={16} />
-        {/* 🦁 Contrôle cette input */}
-        <input type="text" className="grow" placeholder="user" />
+        <input
+          type="text"
+          className="grow"
+          minLength={3}
+          name="user"
+          placeholder="user"
+        />
       </label>
-      <button type="button" className="btn btn-primary">
+      <button type="submit" className="btn btn-primary">
         Submit
       </button>
     </form>
@@ -57,7 +64,7 @@ export default function App() {
   return (
     <div className="flex justify-center">
       <LoginForm
-        onSubmit={(values) => {
+        onSubmitData={(values) => {
           setUser(values);
         }}
       />
