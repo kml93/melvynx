@@ -9,10 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@resvg/resvg-wasm": "^2.6.2",
     "class-variance-authority": "^0.7.0",
     "next": "14.2.5",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "satori": "^0.10.14"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.13",
