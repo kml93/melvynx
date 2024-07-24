@@ -6,16 +6,12 @@ import ImageGenerator from "@/components/ImageGenerator";
 import { renderPNG } from "@/utils/render-png";
 import { useState } from "react";
 
-export type ImageDownloadedProps =
-  | {
-      src: string;
-      width: number;
-      height: number;
-      downloaded: true;
-    }
-  | {
-      downloaded: false;
-    };
+export type ImageUploadedProps = {
+  src: string;
+  width: number;
+  height: number;
+  name: string;
+} | null;
 
 export type SettingsProps = {
   padding: number;
@@ -24,16 +20,13 @@ export type SettingsProps = {
 };
 
 const Page = () => {
-  const [imageDownloaded, setImageDownloaded] = useState<ImageDownloadedProps>({
-    downloaded: false,
-  });
+  const [imageUploaded, setImageUploaded] = useState<ImageUploadedProps>(null);
   const [settings, setSettings] = useState<SettingsProps>({
     padding: 16,
     shadow: 10,
     radius: 16,
   });
-
-  console.log("imageDownloaded:", imageDownloaded);
+  console.log("imageUploaded:", imageUploaded);
 
   return (
     <main className="mx-auto flex h-full max-w-screen-sm flex-col items-center justify-center gap-8">
@@ -43,7 +36,7 @@ const Page = () => {
           <form className="card gap-4">
             <FormInputFile
               labelName="file"
-              setImageDownloaded={setImageDownloaded}
+              setImageUploaded={setImageUploaded}
             />
             <FormInputRange
               labelName="padding"
@@ -64,27 +57,27 @@ const Page = () => {
         </div>
       </div>
       <div className="mx-auto flex w-full flex-col items-center gap-4">
-        <ImageGenerator imageDownloaded={imageDownloaded} settings={settings} />
+        <ImageGenerator imageUploaded={imageUploaded} settings={settings} />
         <div className="flex items-center gap-2">
           <Button
             title="Download"
-            isActive={imageDownloaded.downloaded}
+            isActive={!!imageUploaded}
             onClick={async () => {
-              const { blob } = await renderPNG({
-                image: imageDownloaded,
+              const { blob } = await renderPNG?.({
+                image: imageUploaded,
                 settings,
               });
               const url = URL.createObjectURL(blob);
 
               const a = document.createElement("a");
               a.href = url;
-              a.download = "image.png";
+              a.download = imageUploaded?.name ?? "image.png";
               a.click();
             }}
           ></Button>
           <Button
             title="Copy"
-            isActive={imageDownloaded.downloaded}
+            isActive={!!imageUploaded}
             onClick={() => {}}
           ></Button>
         </div>

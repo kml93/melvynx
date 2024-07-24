@@ -48,7 +48,7 @@ export async function renderPNG({ image, settings }) {
   };
 
   const svg = await satori(
-    <ImageGenerator settings={newSettings} imageDownloaded={image} />,
+    <ImageGenerator settings={newSettings} imageUploaded={image} />,
     {
       width: image.width,
     },

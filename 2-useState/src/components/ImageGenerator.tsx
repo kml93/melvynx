@@ -1,21 +1,19 @@
-import { ImageDownloadedProps, SettingsProps } from "@/app/page";
+import { ImageUploadedProps, SettingsProps } from "@/app/page";
 
 type ImageGeneratorProps = {
-  imageDownloaded: ImageDownloadedProps;
+  imageUploaded: ImageUploadedProps;
   settings: SettingsProps;
 };
 
 export const ImageGenerator = ({
-  imageDownloaded,
+  imageUploaded,
   settings,
 }: ImageGeneratorProps) => {
-  console.log("imageDownloaded.downloaded:", imageDownloaded.downloaded);
-
   return (
     <div style={{ display: "flex", padding: `${settings.padding}px` }}>
-      {imageDownloaded.downloaded ? (
+      {imageUploaded ? (
         <img
-          src={imageDownloaded.src}
+          src={imageUploaded.src}
           alt="Image downloaded"
           style={{
             display: "flex",
