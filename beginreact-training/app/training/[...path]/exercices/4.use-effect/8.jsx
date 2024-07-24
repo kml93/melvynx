@@ -5,9 +5,18 @@ import { useEffect, useState } from 'react';
 
 const STORAGE_KEY = 'storage-name';
 
+const getInitialLocalStorageValue = (key) => {
+  try {
+    const value = localStorage.getItem(key);
+    return value;
+  } catch {
+    return null;
+  }
+};
+
 const NameForm = ({ initialName }) => {
   const [name, setName] = useState(
-    () => localStorage.getItem(STORAGE_KEY) ?? initialName
+    () => getInitialLocalStorageValue(STORAGE_KEY) ?? initialName
   );
 
   useEffect(() => {
