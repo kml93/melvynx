@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const useEventListener = ({
   eventName,
@@ -8,19 +8,21 @@ const useEventListener = ({
   element = window,
   enabled = true,
 }) => {
+  const refHandler = useRef(handler);
+
+  useEffect(() => {
+    refHandler.current = handler;
+  }, [handler]);
+
   useEffect(() => {
     if (!enabled) return;
 
-    const onClick = () => handler();
+    const onClick = (event) => refHandler.current(event);
 
-    console.log('Add EventListener');
     element.addEventListener(eventName, onClick);
 
-    return () => {
-      console.log('Remove EventListener');
-      element.removeEventListener(eventName, onClick);
-    };
-  }, [element, enabled, eventName, handler]);
+    return () => element.removeEventListener(eventName, onClick);
+  }, [element, enabled, eventName, refHandler]);
 };
 
 export default function App() {
@@ -29,10 +31,7 @@ export default function App() {
 
   useEventListener({
     eventName: 'click',
-    handler: () => {
-      console.log('Click window');
-      setCount((curr) => curr + 1);
-    },
+    handler: () => setCount((curr) => curr + 1),
     enabled: isCountingClick,
   });
 
