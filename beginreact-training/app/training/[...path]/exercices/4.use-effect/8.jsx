@@ -5,26 +5,32 @@ import { useEffect, useState } from 'react';
 
 const STORAGE_KEY = 'storage-name';
 
-const getInitialLocalStorageValue = (key) => {
+const getInitialLocalStorageValue = (key, initialValue) => {
   try {
     const value = localStorage.getItem(key);
-    return value;
+    return value !== null ? value : initialValue;
   } catch {
-    return null;
+    return initialValue;
   }
 };
 
-const NameForm = ({ initialName }) => {
-  const [name, setName] = useState(
-    () => getInitialLocalStorageValue(STORAGE_KEY) ?? initialName
+const useStickyState = (key, initialName) => {
+  const [value, setValue] = useState(() =>
+    getInitialLocalStorageValue(key, initialName)
   );
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, name);
-  }, [name]);
+    localStorage.setItem(key, value);
+  }, [key, value]);
+
+  return [value, setValue];
+};
+
+const NameForm = ({ initialName }) => {
+  const [name, setName] = useStickyState(STORAGE_KEY, initialName);
 
   return (
-    <div className="flex flex-col items-center justify-center space-y-4">
+    <div className="flex flex-col items-center justify-center">
       <label className="input input-bordered flex items-center gap-2">
         <User2 size={16} />
         <input
