@@ -1,17 +1,16 @@
 'use client';
 
 import { faker } from '@faker-js/faker';
-import useSWR from 'swr';
+import { Suspense, use } from 'react';
 
-const fetcher = (args) => fetch(args).then((res) => res.json());
-
-const useData = (url) => {
-  const { data, error, isLoading } = useSWR(url, fetcher);
-  return { data, isError: error, isLoading };
+const fetchCatFact = async (url) => {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error('Server not response');
+  return await response.json();
 };
 
 const CatFact = () => {
-  const { data, isError, isLoading } = useData('https://catfact.ninja/fact');
+  const data = use(fetchCatFact('https://catfact.ninja/fact'));
 
   return (
     <div className="card card-compact mx-auto w-96 max-w-sm bg-base-200 shadow-xl">
@@ -24,11 +23,7 @@ const CatFact = () => {
       </figure>
       <div className="card-body">
         <h2 className="card-title">Cat fact</h2>
-        {isLoading && (
-          <span className="loading loading-spinner loading-lg"></span>
-        )}
-        {isError && <p className="text-error">{isError}</p>}
-        {data && <p>{data.fact}</p>}
+        <p>{data.fact}</p>
       </div>
     </div>
   );
@@ -37,7 +32,11 @@ const CatFact = () => {
 export default function App() {
   return (
     <div>
-      <CatFact />
+      <Suspense
+        fallback={<span className="loading loading-spinner loading-lg"></span>}
+      >
+        <CatFact />
+      </Suspense>
     </div>
   );
 }
