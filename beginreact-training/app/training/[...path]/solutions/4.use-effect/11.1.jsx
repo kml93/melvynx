@@ -1,6 +1,7 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
+import { faker } from '@faker-js/faker';
+import { useEffect, useState } from 'react';
 
 const CatFact = () => {
   const [data, setData] = useState(null);
@@ -10,14 +11,14 @@ const CatFact = () => {
   useEffect(() => {
     const abortController = new AbortController();
 
-    fetch("https://catfact.ninja/fact", {
+    fetch('https://catfact.ninja/fact', {
       signal: abortController.signal,
     })
       .then((res) => {
         if (res.ok) {
           return res.json();
         }
-        throw new Error("Invalid response");
+        throw new Error('Invalid response');
       })
       .then((data) => {
         setIsError(false);
@@ -40,7 +41,7 @@ const CatFact = () => {
     <div className="card card-compact w-96 max-w-sm bg-base-200 shadow-xl">
       <figure>
         <img
-          src="https://cataas.com/cat"
+          src={faker.image.urlLoremFlickr({ category: 'cats' })}
           alt="Shoes"
           className="max-h-32 w-full object-cover"
         />
