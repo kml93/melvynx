@@ -7,7 +7,9 @@ export default function App() {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    const handleClick = () => isCountingClick && setCount((curr) => curr + 1);
+    if (!isCountingClick) return;
+
+    const handleClick = () => setCount((curr) => curr + 1);
     window.addEventListener('click', handleClick);
 
     return () => window.removeEventListener('click', handleClick);
