@@ -3,12 +3,12 @@
 import { User2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-const STORAGE_KEY = 'storage-name';
+const STORAGE_KEY = '4-useEffect';
 
 const getInitialLocalStorageValue = (key, initialValue) => {
   try {
     const value = localStorage.getItem(key);
-    return value !== null ? value : initialValue;
+    return value !== null ? JSON.parse(value) : initialValue;
   } catch {
     return initialValue;
   }
@@ -20,7 +20,7 @@ const useStickyState = (key, initialName) => {
   );
 
   useEffect(() => {
-    localStorage.setItem(key, value);
+    localStorage.setItem(key, JSON.stringify(value));
   }, [key, value]);
 
   return [value, setValue];
@@ -37,8 +37,8 @@ const NameForm = ({ initialName }) => {
           type="text"
           className="grow"
           placeholder="Enter your name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={name.name}
+          onChange={(e) => setName({ name: e.target.value })}
         />
       </label>
     </div>
@@ -48,7 +48,7 @@ const NameForm = ({ initialName }) => {
 export default function App() {
   return (
     <div className="flex flex-col gap-8">
-      <NameForm initialName={'Jean'} />
+      <NameForm initialName={{ name: 'Jean' }} />
     </div>
   );
 }
