@@ -1,39 +1,17 @@
 'use client';
 
 import { faker } from '@faker-js/faker';
-import { useEffect, useState } from 'react';
+import useSWR from 'swr';
+
+const fetcher = (args) => fetch(args).then((res) => res.json());
+
+const useData = (url) => {
+  const { data, error, isLoading } = useSWR(url, fetcher);
+  return { data, isError: error, isLoading };
+};
 
 const CatFact = () => {
-  const [data, setData] = useState(null);
-  const [isError, setIsError] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const abortController = new AbortController();
-
-    fetch('https://catfact.ninja/fact', {
-      signal: abortController.signal,
-    })
-      .then((response) => {
-        if (response.ok) return response.json();
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      })
-      .then((data) => {
-        setIsError(false);
-        setData(data);
-      })
-      .catch(() => {
-        setIsError(true);
-        setData(null);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-
-    return () => {
-      abortController.abort();
-    };
-  }, []);
+  const { data, isError, isLoading } = useData('https://catfact.ninja/fact');
 
   return (
     <div className="card card-compact mx-auto w-96 max-w-sm bg-base-200 shadow-xl">
@@ -49,11 +27,7 @@ const CatFact = () => {
         {isLoading && (
           <span className="loading loading-spinner loading-lg"></span>
         )}
-        {isError && (
-          <p className="text-error">
-            Something went wrong while fetching the cat fact
-          </p>
-        )}
+        {isError && <p className="text-error">{isError}</p>}
         {data && <p>{data.fact}</p>}
       </div>
     </div>
