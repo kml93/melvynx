@@ -1,7 +1,18 @@
 "use client";
 
+import SearchInput from "@/components/SearchInput";
+
 const Page = () => {
-  return <main className="min-h-full">Home</main>;
+  // const [searchValue, setSearchValue] = useState("");
+
+  return (
+    <main className="min-h-full">
+      <SearchInput
+      // searchValue={searchValue}
+      // setSearchValue={setSearchValue}
+      />
+    </main>
+  );
 };
 
 export default Page;

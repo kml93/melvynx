@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full" data-theme="dracula">
-      <body className={clsx(inter.className, "h-full")}>{children}</body>
+      <body className={cn(inter.className, "h-full")}>{children}</body>
     </html>
   );
 }
